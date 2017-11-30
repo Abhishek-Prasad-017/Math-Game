@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Math Quiz</title>
+<style>
+.button {
+  padding: 15px 25px;
+  vertical-align: center;;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  position: absolute;
+  top: 50%;
+  left: 46%;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+#myProgress {
+    width: 30%;
+    background-color: grey;
+    text-align:center;
+    margin:0 auto;
+    
+}
+
+#myBar {
+    width: 1%;
+    height: 30px;
+    background-color: green;
+}
+
+.center{
+	text-align: center;
+}
+
+</style>
+</head>
+<body>
+<h1 align="center">Math Quiz for all:-</h1>
+<div id="myProgress">
+  <div id="myBar"></div>
+</div>
+<br>
+<div class="center" id="dd">
+	<h3 id ="question"></h3>
+	 <p id="myP" class="center">Gone <span id="demo">0</span> of 10 seconds</p>
+	<p id="score"></p>
+</div>
+<button class="button" id="but1">Play!!!!!</button>
+
+<script>
+var but1=document.getElementById("but1");
+but1.addEventListener("click",play,false);
+var score = 0,count=0,restart_1=0;
+var a1,q,a,s,b1,j,k,m,stop=0;
+
+function move_bar() {
+  var elem = document.getElementById("myBar");   
+  var width = 0;
+  var id = setInterval(frame, 40);
+  function frame() {
+    if (width >= 100) {
+      check();
+      clearInterval(id);
+      } 
+      else {
+      width++; 
+      elem.style.width = width + '%'; 
+      var num = width * 1 / 10;
+      num = num.toFixed(0)
+      document.getElementById("demo").innerHTML = num;
+    }
+  }
+}
+
+function restart()
+{	
+	restart_1++;
+	score=0;
+	count=0;
+	t=document.getElementById("dd");
+	j=document.createElement("p");
+	j.setAttribute("id","pp");
+	j.textContent="Enter your answer";
+	t.appendChild(j);
+	k=document.createElement("input");
+	k.setAttribute("id","answer");
+	k.setAttribute("type","text");
+	t.appendChild(k);
+	s.textContent="";
+	play();
+}
+
+function end()
+{
+	q.textContent = "Your Game is Over!!!";
+	s.textContent = "Your Score is "+score ;
+	stop=0;
+	t=document.getElementById("dd");
+	r1=document.getElementById("pp");
+	r2=document.getElementById("answer");
+	t.removeChild(r1);
+	t.removeChild(r2);
+	var b=document.createElement("button");
+	b.setAttribute("class","button");
+	b.setAttribute("id","but2");
+	b.textContent="restart";
+	b.setAttribute("onclick","restart()");
+	document.body.appendChild(b);
+	
+}
+
+
+function randomExpressionMember() {
+  return Math.floor(Math.random() * 15 + 1);
+}
+
+
+function createExpression() {
+  a1 = randomExpressionMember();
+  b1 = randomExpressionMember();
+  m = a1 + b1;
+ }
+
+
+
+
+function displayExpression() {
+  q.textContent = a1 + " + " + b1+" = ";
+}
+
+function play() {
+	if(count==0 && restart_1==0)
+	{
+ 	t=document.getElementById("dd");
+	j=document.createElement("p");
+	j.setAttribute("id","pp");
+	j.textContent="Enter your answer";
+	t.appendChild(j);
+	k=document.createElement("input");
+	k.setAttribute("id","answer");
+	k.setAttribute("type","text");
+	t.appendChild(k);
+	}
+	q=document.getElementById("question");
+	a=document.getElementById("answer");
+	s=document.getElementById("score");
+  	stop=0;
+  	a.value="";
+  	if(count==0 && restart_1==0)
+ 	 {
+		x=document.getElementById("but1");
+		document.body.removeChild(x);
+ 	 }
+  	count++;
+ 	 createExpression();
+ 	 displayExpression();
+ 	 move_bar();
+}
+
+function check()
+{
+  if(a.value==m)
+  	{
+  		console.log("in play");
+  		play();
+  		score++;
+  	}
+  	else
+  		end();
+  
+}
+
+</script>
+</body>
+</html>
